@@ -15,8 +15,10 @@ function load() { try { Object.assign(cfg, JSON.parse(fs.readFileSync(cfgPath(),
 function save() { try { fs.writeFileSync(cfgPath(), JSON.stringify(cfg)); } catch (e) {} }
 
 function openFull(url) {
+  url = url.split('#')[0].replace(/[?&](widget|app)\b/g, '');
+  url += (url.includes('?') ? '&' : '?') + 'full';
   if (full && !full.isDestroyed()) { full.loadURL(url); full.show(); full.focus(); return; }
-  full = new BrowserWindow({ width: 1320, height: 900, icon: ICON, autoHideMenuBar: true, backgroundColor: '#161826', title: '진플래너' });
+  full = new BrowserWindow({ width: 1500, height: 1000, icon: ICON, autoHideMenuBar: true, backgroundColor: '#161826', title: '진플래너' });
   full.loadURL(url);
   full.webContents.setWindowOpenHandler(({ url }) => { shell.openExternal(url); return { action: 'deny' }; });
 }
@@ -25,7 +27,7 @@ function createWin() {
   win = new BrowserWindow({
     width: cfg.w, height: cfg.h, x: cfg.x, y: cfg.y,
     minWidth: 420, minHeight: 360,
-    frame: false, backgroundColor: '#000000', icon: ICON, title: '진플래너',
+    frame: false, skipTaskbar: true, backgroundColor: '#000000', icon: ICON, title: '진플래너',
     alwaysOnTop: cfg.top, resizable: !cfg.lock, movable: !cfg.lock, show: false,
   });
   win.setOpacity(cfg.opacity);

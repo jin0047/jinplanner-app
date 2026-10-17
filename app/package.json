@@ -1,0 +1,36 @@
+{
+  "name": "jinplanner",
+  "version": "1.0.0",
+  "description": "진플래너",
+  "author": "jin",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis --publish never"
+  },
+  "devDependencies": {
+    "electron": "^31.7.7",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "io.github.jin0047.jinplanner",
+    "productName": "JinPlanner",
+    "artifactName": "JinPlanner-Setup-${version}.${ext}",
+    "files": [
+      "main.js",
+      "icon.png"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "icon.png"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "shortcutName": "진플래너",
+      "createDesktopShortcut": true
+    }
+  }
+}
